@@ -1,0 +1,18 @@
+version: '2'
+services:
+  neo4j:
+    image: neo4j:latest
+    network_mode: host
+    restart: always
+    environment:
+      - NEO4J_AUTH=neo4j/password
+    cap_add:
+      - SYS_RESOURCE
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+      - "1337:1337"
+    volumes:
+      - ./neo4j/plugins:/plugins
+      - ./neo4j/data:/data
+      - ./neo4j/import:/var/lib/neo4j/import

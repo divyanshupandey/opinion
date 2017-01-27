@@ -1,0 +1,123 @@
+version: '2'
+services:
+  webapp:
+    image: oxygen/oxygen-platform:v1.0.1
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    network_mode: host
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mongodb
+      - rabbitmq
+      - neo4j
+      - redis
+    env_file:
+      - ./oxygen.env
+    entrypoint:
+      - /bin/sh
+      - -c
+      - 'npm run www --production'
+  searcher:
+    image: oxygen/oxygen-platform:v1.0.1
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    network_mode: host
+    restart: always
+    depends_on:
+      - mongodb
+      - rabbitmq
+      - redis
+    env_file:
+      - ./oxygen.env
+    entrypoint:
+      - /bin/sh
+      - -c
+      - 'npm run search --production'
+  crawler:
+    image: oxygen/oxygen-platform:v1.0.1
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    network_mode: host
+    restart: always
+    depends_on:
+      - mongodb
+      - rabbitmq
+      - redis
+      - neo4j
+    env_file:
+      - ./oxygen.env
+    entrypoint:
+      - /bin/sh
+      - -c
+      - 'npm run crawl --production'
+  parser:
+    image: oxygen/oxygen-platform:v1.0.1
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    network_mode: host
+    restart: always
+    depends_on:
+      - mongodb
+      - rabbitmq
+      - redis
+      - neo4j
+    env_file:
+      - ./oxygen.env
+    entrypoint:
+      - /bin/sh
+      - -c
+      - 'npm run parser --production'
+  mongodb:
+    image: mvertes/alpine-mongo
+    network_mode: host
+    restart: always
+    volumes:
+      - /data:/data/db
+    expose:
+      - 27017
+    ports:
+      - "27017:27017"
+  rabbitmq:
+    image: smebberson/alpine-rabbitmq
+    network_mode: host
+    restart: always
+    volumes:
+      - /data:/data/db
+    expose:
+      - 5672
+    ports:
+      - "5672:5672"
+  neo4j:
+    image: neo4j:3.0.7
+    network_mode: host
+    restart: always
+    environment:
+      - NEO4J_AUTH=neo4j/password
+    cap_add:
+      - SYS_RESOURCE
+    expose:
+      - 7474
+      - 7687
+      - 1337
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+      - "1337:1337"
+    volumes:
+      - ./neo4jContainer/neo4j/plugins:/plugins
+      - ./neo4jContainer/neo4j/data:/data
+      - ./neo4jContainer/neo4j/import:/var/lib/neo4j/import
+  redis:
+   image: smebberson/alpine-redis
+   network_mode: host
+   restart: always
+   expose:
+    - 6379
+   ports:
+    - "6379:6379"
