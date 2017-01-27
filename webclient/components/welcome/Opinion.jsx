@@ -120,7 +120,8 @@ this.disableSignUPButton = this.disableSignUPButton.bind(this);
   {
     let d = new Date();
     let t = d.getTime();
-    t = Number(Math.floor(t/1000));
+    let s=t.toString()
+    t = Number(s.substring(7,13));
     let url =`/opinion/otp`;
 
     Request

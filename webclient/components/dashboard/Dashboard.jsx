@@ -78,7 +78,7 @@ const fonts={
 
 	textAlign: "center",
 	fontFamily: "sans-serif",
-	color: "#1976d2 "
+	color: "#1976d2"
 
 }
 const style = {
@@ -470,7 +470,7 @@ export default class Dashboard extends React.Component {
 
 			if(this.state.user==='admin')
 			{
-				show.push(<Row style={{marginBottom : 15}}>
+				show.push(<Row style={{marginBottom : 15 , marginLeft : 0, marginRight : 0}}>
 									<Col lg={6} md={6} sm={6}>
 									<AddParty
 									addParty={this.addParty.bind(this)}
@@ -484,13 +484,14 @@ export default class Dashboard extends React.Component {
 									</Row>);
 			}
 			else {
-				show.push(<Row><h1>Thanks for your opinion</h1></Row>);
+				show.push(<Row style={{marginBottom : 15 , marginLeft : 0, marginRight : 0}}>
+					<h1>Thanks for your opinion</h1></Row>);
 			}
 			const allEvents=[];
 
 			{this.state.eventList.map((item,i) =>{
 				allEvents.push(
-					<Row>
+					<Row style={{marginLeft : 0, marginRight : 0}}>
 					<Col lg={3} md={3} sm={12} xs={12} key={i}>
           <Paper style={paperStyle}>
 					<h3>{item.eventName}</h3>
@@ -526,7 +527,7 @@ export default class Dashboard extends React.Component {
 					{
 						this.state.eventList.length!==0?<div>
 						<br/>
-						<Row>
+						<Row  style={{marginLeft : 0, marginRight : 0}}>
 						<Col lg={11} md={11} sm={12} xs={12}><h1>OUR POLITICAL EVENTS</h1></Col>
 						<Col lg={1} md={1} sm={12} xs={12} >
 					  <Link to='/'>
