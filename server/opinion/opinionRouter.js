@@ -17,7 +17,7 @@ router.post('/otp', function(req, res) {
     service: 'Gmail',
     auth: {
         user: 'pandey.divyanshu34@gmail.com', // Your email id
-        pass: 'Kamla&31' // Your password
+        pass: '*******' // Your password
     }
 });
 var mailOptions = {
