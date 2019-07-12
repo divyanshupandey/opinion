@@ -16,7 +16,7 @@ router.post('/otp', function(req, res) {
     let transporter = nodemailer.createTransport({
     service: 'Gmail',
     auth: {
-        user: 'pandey.divyanshu34@gmail.com', // Your email id
+        user: '*******', // Your email id
         pass: '*******' // Your password
     }
 });
